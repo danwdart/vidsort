@@ -10,5 +10,11 @@
                 "https://www.googleapis.com/auth/youtube"
             ]
         }
-    }
+    },
+    "pointlessTags": [
+        "of",
+        "my",
+        "the",
+        "this"
+    ]
 }
