@@ -1,7 +1,18 @@
 import YouTube from '../lib/youtube';
 import config from '../../config/config.json';
+import {writeFile, readFile} from 'fs';
+import {promisify} from 'util';
 
 export default async (req, res) => {
+
+    try {
+        const file = await promisify(readFile)('cache.json');
+
+        return res.send(file.toString());
+    } catch (err) {
+        // ok
+    }
+
     const youtube = new YouTube(req);
 
     const playlists = await youtube.getPlaylists();
@@ -84,6 +95,11 @@ export default async (req, res) => {
                     {
                         title: playlistItem.snippet.title,
                         id: playlistItem.snippet.resourceId.videoId,
+                        fromPlaylist: {
+                            title: playlist.snippet.title,
+                            id: playlist.id,
+                            itemId: playlistItem.id
+                        },
                         url: `https://youtube.com/watch?v=${playlistItem.snippet.resourceId.videoId}`
                     }
                 );
@@ -91,76 +107,19 @@ export default async (req, res) => {
         }
     }
 
-    // remove uniques and boring tags
+    const arrVideosByTag = [];
     for (const key in videosByTag) {
-        if (2 >= videosByTag[key].length) {
-            delete videosByTag[key];
-        }
+        arrVideosByTag.push({
+            key,
+            videos: videosByTag[key],
+            length: videosByTag[key].length
+        });
     }
 
-    console.debug("Tag extraction complete");
+    arrVideosByTag.sort((a, b) => a.length > b.length ? -1 : (a.length < b.length ? 1 : 0));
+    console.log(arrVideosByTag);
 
-    for (const tag in videosByTag) {
-        const videoList = videosByTag[tag];
-        
-        const playlistName = `VidSort: ${tag}`;
+    await promisify(writeFile)('cache.json', JSON.stringify(arrVideosByTag));
 
-        const foundPlaylist = playlists.data.items.find(
-            playlist =>
-                playlistName === playlist.snippet.title
-        );
-
-        let playlistId = null;
-
-        if (foundPlaylist) {
-            console.debug(`You have a ${playlistName} playlist already.`);
-            playlistId = foundPlaylist.id;
-        } else {
-            console.debug(`Creating you a ${playlistName} playlist.`);
-            const createPlaylistResponse = await youtube.createPlaylist(
-                playlistName,
-                `Created by JolHarg VidSort for the tag "${tag}"`
-            )
-            playlistId = createPlaylistResponse.data.id;
-        }
-
-        for (let l = 0; l < videoList.length; l++) {
-            const videoDetails = videoList[l];
-
-            if ('undefined' === typeof videoDetails.id) {
-                console.error(`No id for a video, index = ${l}`);
-                continue;
-            }
-
-            if (foundPlaylist) {
-                console.debug(`Given playlist already existed, checking if item existed.`);
-
-                if ('undefined' === typeof foundPlaylist.items) {
-                    console.error('Cannot determine items for playlist.');
-                    continue;
-                }
-
-                const foundPlaylistItem = foundPlaylist.items.find(
-                    playlistItem =>
-                        videoDetails.id === playlistItem.snippet.resourceId.videoId
-                );
-
-                if (foundPlaylistItem) {
-                    console.debug(`Item already existed, skipping.`);
-                    continue;
-                }
-            }
-
-            console.debug(`Inserting video ${videoDetails.id} (${videoDetails.title}) into playlist ${playlistId} (${playlistName})`);
-            const insertPlaylistItemResponse = await insertPlaylistItem(
-                playlistId,
-                videoDetails.id
-            );
-            
-            console.debug(`Inserted.`);
-        }
-    }
-
-    console.log(`Done.`);
-    res.json(videosByTag);
+    return res.json(arrVideosByTag);
 }

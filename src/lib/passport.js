@@ -17,7 +17,7 @@ export default app => {
     
     
     passport.use(new YouTubeStrategy(
-        config.oauth.youtube,
+        config.api.google.oauth,
         async (accessToken, refreshToken, profile, done) => {
             done(null, {
                 profile,
@@ -31,7 +31,7 @@ export default app => {
         passport.authenticate(
             `youtube`,
             {
-                scope: config.oauth.youtube.scope
+                scope: config.api.google.oauth.scope
             }
         )
     );

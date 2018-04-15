@@ -1,20 +1,31 @@
 {
     "ip": "0.0.0.0",
     "port": 3000,
-    "oauth": {
-        "youtube": {
-            "clientID": "",
-            "clientSecret": "",
-            "callbackURL": "http://vidsort.jolharg.com/auth/youtube/callback",
-            "scope": [
-                "https://www.googleapis.com/auth/youtube"
-            ]
+    "api": {
+        "google": {
+            "service": {
+                "customSearch": {
+                    "cx":""
+                },
+                "apiKey": ""
+            },
+            "oauth": {
+                "clientID": "",
+                "clientSecret": "",
+                "callbackURL": "",
+                "scope": [
+                    "https://www.googleapis.com/auth/youtube"
+                ]
+            }
         }
     },
     "pointlessTags": [
+        "a",
+        "and",
         "of",
         "my",
         "the",
-        "this"
+        "this",
+        "you"
     ]
 }

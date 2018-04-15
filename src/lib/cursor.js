@@ -1,14 +1,14 @@
-export default async (method, req, output = []) => {
+export default async function cursor(method, req, output = []) {
     console.debug(`Start cursor`);
     const res = await method(req);
     
-    if (res.nextPageToken) {
+    if (res.data.nextPageToken) {
         console.debug(`There's more, retrieving next lot...`);
         return await cursor(
             method,
             {
                 ...req,
-                pageToken: res.nextPageToken
+                pageToken: res.data.nextPageToken
             },
             [...output, ...res.data.items]
         );
