@@ -22,7 +22,7 @@ export default async (req, res) => {
             continue;
         }
 
-        const playlistItems = await youtube.getPlaylistItems(playlist.id)
+        const playlistItems = await youtube.getPlaylistItems(playlist.id);
 
         // access point
         playlists.data.items[i].items = playlistItems.data.items;
@@ -32,16 +32,16 @@ export default async (req, res) => {
             continue;
         }
 
-        if ('undefined' === typeof playlistItems.data.items) {
-            console.error('No items here.');
+        if (`undefined` === typeof playlistItems.data.items) {
+            console.error(`No items here.`);
             continue;
         }
 
         for (let j = 0; j < playlistItems.data.items.length; j++) {
             const playlistItem = playlistItems.data.items[j];
 
-            if ('undefined' === typeof playlistItem.snippet) {
-                console.error('No playlist item snippet here.');
+            if (`undefined` === typeof playlistItem.snippet) {
+                console.error(`No playlist item snippet here.`);
                 continue;
             }
             console.debug(`Found video ID ${playlistItem.snippet.resourceId.videoId}, title = ${playlistItem.snippet.title}`);
@@ -52,18 +52,18 @@ export default async (req, res) => {
             
             const video = videoResponse.data.items[0];
 
-            if ('undefined' === typeof video) {
+            if (`undefined` === typeof video) {
                 console.error(`No video here. May have been deleted. Video Id = ${playlistItem.snippet.resourceId.videoId}`);
                 continue;
             }
 
-            if ('undefined' === typeof video.snippet) {
-                console.error('No video snippet here.');
+            if (`undefined` === typeof video.snippet) {
+                console.error(`No video snippet here.`);
                 continue;
             }
 
-            if ('undefined' === typeof video.snippet.tags) {
-                console.error('No tags here');
+            if (`undefined` === typeof video.snippet.tags) {
+                console.error(`No tags here`);
                 continue;
             }
 
@@ -76,7 +76,7 @@ export default async (req, res) => {
                     continue;
                 }
 
-                if ('undefined' === typeof videosByTag[tag]) {
+                if (`undefined` === typeof videosByTag[tag]) {
                     videosByTag[tag] = [];
                 }
 
@@ -98,7 +98,7 @@ export default async (req, res) => {
         }
     }
 
-    console.debug("Tag extraction complete");
+    console.debug(`Tag extraction complete`);
 
     for (const tag in videosByTag) {
         const videoList = videosByTag[tag];
@@ -120,14 +120,14 @@ export default async (req, res) => {
             const createPlaylistResponse = await youtube.createPlaylist(
                 playlistName,
                 `Created by JolHarg VidSort for the tag "${tag}"`
-            )
+            );
             playlistId = createPlaylistResponse.data.id;
         }
 
         for (let l = 0; l < videoList.length; l++) {
             const videoDetails = videoList[l];
 
-            if ('undefined' === typeof videoDetails.id) {
+            if (`undefined` === typeof videoDetails.id) {
                 console.error(`No id for a video, index = ${l}`);
                 continue;
             }
@@ -135,8 +135,8 @@ export default async (req, res) => {
             if (foundPlaylist) {
                 console.debug(`Given playlist already existed, checking if item existed.`);
 
-                if ('undefined' === typeof foundPlaylist.items) {
-                    console.error('Cannot determine items for playlist.');
+                if (`undefined` === typeof foundPlaylist.items) {
+                    console.error(`Cannot determine items for playlist.`);
                     continue;
                 }
 
@@ -152,7 +152,7 @@ export default async (req, res) => {
             }
 
             console.debug(`Inserting video ${videoDetails.id} (${videoDetails.title}) into playlist ${playlistId} (${playlistName})`);
-            const insertPlaylistItemResponse = await insertPlaylistItem(
+            await youtube.insertPlaylistItem(
                 playlistId,
                 videoDetails.id
             );
@@ -163,4 +163,4 @@ export default async (req, res) => {
 
     console.log(`Done.`);
     res.json(videosByTag);
-}
+};

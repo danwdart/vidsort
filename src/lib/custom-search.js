@@ -1,5 +1,4 @@
 import config from '../../config/config.json';
-import cursor from './cursor';
 import google from 'googleapis';
 import {promisify} from 'util';
 

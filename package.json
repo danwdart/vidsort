@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app/index",
     "build": "babel src -d app",
-    "test": "eslint src/*.js"
+    "test": "eslint src"
   },
   "repository": {
     "type": "git",

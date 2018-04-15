@@ -6,7 +6,7 @@ import {promisify} from 'util';
 export default async (req, res) => {
 
     try {
-        const file = await promisify(readFile)('cache.json');
+        const file = await promisify(readFile)(`cache.json`);
 
         return res.send(file.toString());
     } catch (err) {
@@ -33,7 +33,7 @@ export default async (req, res) => {
             continue;
         }
 
-        const playlistItems = await youtube.getPlaylistItems(playlist.id)
+        const playlistItems = await youtube.getPlaylistItems(playlist.id);
 
         // access point
         playlists.data.items[i].items = playlistItems.data.items;
@@ -43,16 +43,16 @@ export default async (req, res) => {
             continue;
         }
 
-        if ('undefined' === typeof playlistItems.data.items) {
-            console.error('No items here.');
+        if (`undefined` === typeof playlistItems.data.items) {
+            console.error(`No items here.`);
             continue;
         }
 
         for (let j = 0; j < playlistItems.data.items.length; j++) {
             const playlistItem = playlistItems.data.items[j];
 
-            if ('undefined' === typeof playlistItem.snippet) {
-                console.error('No playlist item snippet here.');
+            if (`undefined` === typeof playlistItem.snippet) {
+                console.error(`No playlist item snippet here.`);
                 continue;
             }
             console.debug(`Found video ID ${playlistItem.snippet.resourceId.videoId}, title = ${playlistItem.snippet.title}`);
@@ -63,18 +63,18 @@ export default async (req, res) => {
             
             const video = videoResponse.data.items[0];
 
-            if ('undefined' === typeof video) {
+            if (`undefined` === typeof video) {
                 console.error(`No video here. May have been deleted. Video Id = ${playlistItem.snippet.resourceId.videoId}`);
                 continue;
             }
 
-            if ('undefined' === typeof video.snippet) {
-                console.error('No video snippet here.');
+            if (`undefined` === typeof video.snippet) {
+                console.error(`No video snippet here.`);
                 continue;
             }
 
-            if ('undefined' === typeof video.snippet.tags) {
-                console.error('No tags here');
+            if (`undefined` === typeof video.snippet.tags) {
+                console.error(`No tags here`);
                 continue;
             }
 
@@ -87,7 +87,7 @@ export default async (req, res) => {
                     continue;
                 }
 
-                if ('undefined' === typeof videosByTag[tag]) {
+                if (`undefined` === typeof videosByTag[tag]) {
                     videosByTag[tag] = [];
                 }
 
@@ -119,7 +119,7 @@ export default async (req, res) => {
     arrVideosByTag.sort((a, b) => a.length > b.length ? -1 : (a.length < b.length ? 1 : 0));
     console.log(arrVideosByTag);
 
-    await promisify(writeFile)('cache.json', JSON.stringify(arrVideosByTag));
+    await promisify(writeFile)(`cache.json`, JSON.stringify(arrVideosByTag));
 
     return res.json(arrVideosByTag);
-}
+};

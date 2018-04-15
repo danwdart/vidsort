@@ -21,18 +21,18 @@ export default async (req, res) => {
 
         missingVideosByPlaylist[playlist.id] = [];
 
-        const playlistItems = await youtube.getPlaylistItems(playlist.id)
+        const playlistItems = await youtube.getPlaylistItems(playlist.id);
 
-        if ('undefined' === typeof playlistItems.data.items) {
-            console.error('No items here.');
+        if (`undefined` === typeof playlistItems.data.items) {
+            console.error(`No items here.`);
             continue;
         }
 
         for (let j = 0; j < playlistItems.data.items.length; j++) {
             const playlistItem = playlistItems.data.items[j];
 
-            if ('undefined' === typeof playlistItem.snippet) {
-                console.error('No playlist item snippet here.');
+            if (`undefined` === typeof playlistItem.snippet) {
+                console.error(`No playlist item snippet here.`);
                 continue;
             }
             // console.debug(`Found video ID ${playlistItem.snippet.resourceId.videoId}, title = ${playlistItem.snippet.title}`);
@@ -43,7 +43,7 @@ export default async (req, res) => {
             
             const video = videoResponse.data.items[0];
 
-            if ('undefined' !== typeof video) {
+            if (`undefined` !== typeof video) {
                 // Not missing
                 continue;
             }
@@ -59,4 +59,4 @@ export default async (req, res) => {
 
     console.log(`Done.`);
     res.json(missingVideosByPlaylist);
-}
+};

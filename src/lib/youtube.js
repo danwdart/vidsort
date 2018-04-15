@@ -2,7 +2,6 @@ import config from '../../config/config.json';
 import cursor from './cursor';
 import google from 'googleapis';
 import {promisify} from 'util';
-import { oauth2 } from 'googleapis/build/src/apis';
 
 export default class YouTube
 {
@@ -16,7 +15,7 @@ export default class YouTube
     
         if (req) {
             if (!req.session || !req.session.passport || !req.session.passport.user) {
-                throw new Error('User not logged in');
+                throw new Error(`User not logged in`);
             }
             
             oauth2Client.setCredentials({
@@ -27,10 +26,10 @@ export default class YouTube
         
         this.gyoutube = google.youtube(
             {
-                version: 'v3',
+                version: `v3`,
                 auth: oauth2Client
             }
-        )
+        );
     }
 
     async getPlaylists()
@@ -78,7 +77,7 @@ export default class YouTube
     {
         return promisify(this.gyoutube.playlists.insert)(
             {
-                "part": "snippet",
+                "part": `snippet`,
                 "resource": {
                     "snippet": {
                         "title": playlistName,
@@ -104,6 +103,6 @@ export default class YouTube
                     }
                 }
             }
-        )
+        );
     }
 }
