@@ -31,7 +31,7 @@
     "client-sessions": "^0.8.0",
     "consolidate": "^0.15.1",
     "express": "^4.16.3",
-    "googleapis": "^38.0.0",
+    "googleapis": "^39.2.0",
     "hogan.js": "^3.0.2",
     "npm": "^6.2.0",
     "passport": "^0.4.0",
