@@ -27,23 +27,23 @@
   },
   "homepage": "https://github.com/dandart/vidsort#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "client-sessions": "^0.8.0",
     "consolidate": "^0.15.1",
-    "express": "^4.16.3",
-    "googleapis": "^37.2.0",
+    "express": "^4.16.4",
+    "googleapis": "^40.0.0",
     "hogan.js": "^3.0.2",
-    "npm": "^6.2.0",
+    "npm": "^6.9.0",
     "passport": "^0.4.0",
     "passport-youtube": "0.0.6",
-    "passport-youtube-v3": "^2.0.0",
-    "snyk": "^1.88.0"
+    "passport-youtube-v3": "^2.1.0",
+    "snyk": "^1.165.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "eslint": "^5.2.0"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "eslint": "^5.16.0"
   },
   "snyk": true
 }
