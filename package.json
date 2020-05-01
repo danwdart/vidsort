@@ -37,7 +37,7 @@
     "passport": "^0.4.1",
     "passport-youtube": "0.0.6",
     "passport-youtube-v3": "^2.1.0",
-    "snyk": "^2.0.0"
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
