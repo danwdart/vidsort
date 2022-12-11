@@ -49,7 +49,7 @@ export default async (req, res) => {
             const videoResponse = await youtube.getVideoById(
                 playlistItem.snippet.resourceId.videoId
             );
-            
+
             const video = videoResponse.data.items[0];
 
             if (`undefined` === typeof video) {
@@ -102,7 +102,7 @@ export default async (req, res) => {
 
     for (const tag in videosByTag) {
         const videoList = videosByTag[tag];
-        
+
         const playlistName = `VidSort: ${tag}`;
 
         const foundPlaylist = playlists.data.items.find(
@@ -156,7 +156,7 @@ export default async (req, res) => {
                 playlistId,
                 videoDetails.id
             );
-            
+
             console.debug(`Inserted.`);
         }
     }

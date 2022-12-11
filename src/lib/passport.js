@@ -7,15 +7,15 @@ export default app => {
     passport.serializeUser(function(user, done) {
         done(null, user);
     });
-    
+
     passport.deserializeUser(function(user, done) {
         done(null, user);
     });
-    
+
     app.use(passport.initialize());
     app.use(passport.session());
-    
-    
+
+
     passport.use(new YouTubeStrategy(
         config.api.google.oauth,
         async (accessToken, refreshToken, profile, done) => {

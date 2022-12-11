@@ -12,18 +12,18 @@ export default class YouTube
             config.api.google.oauth.clientSecret,
             config.api.google.oauth.callbackURL
         );
-    
+
         if (req) {
             if (!req.session || !req.session.passport || !req.session.passport.user) {
                 throw new Error(`User not logged in`);
             }
-            
+
             oauth2Client.setCredentials({
                 access_token: req.session.passport.user.accessToken,
                 refresh_token: req.session.passport.user.refreshToken
             });
         }
-        
+
         this.gyoutube = google.youtube(
             {
                 version: `v3`,
@@ -82,7 +82,7 @@ export default class YouTube
                     "snippet": {
                         "title": playlistName,
                         "description": description
-                    }       
+                    }
                 }
             }
         );

@@ -1,7 +1,7 @@
 export default async function cursor(method, req, output = []) {
     console.debug(`Start cursor`);
     const res = await method(req);
-    
+
     if (res.data.nextPageToken) {
         console.debug(`There's more, retrieving next lot...`);
         return await cursor(

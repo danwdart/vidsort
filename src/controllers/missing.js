@@ -40,7 +40,7 @@ export default async (req, res) => {
             const videoResponse = await youtube.getVideoById(
                 playlistItem.snippet.resourceId.videoId
             );
-            
+
             const video = videoResponse.data.items[0];
 
             if (`undefined` !== typeof video) {
