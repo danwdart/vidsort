@@ -36,8 +36,8 @@
     "hogan.js": "^3.0.2",
     "npm": "^9.5.0",
     "passport": "^0.6.0",
-    "passport-youtube": "^0.0.4",
-    "passport-youtube-v3": "^1.0.1"
+    "passport-youtube": "^0.0.5",
+    "passport-youtube-v3": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",
